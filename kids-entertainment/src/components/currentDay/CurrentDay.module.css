@@ -1,0 +1,45 @@
+.task {
+  display: flex;
+  justify-content: center;
+  font-family: Montserrat;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 21px;
+  color: #858598;
+}
+.day {
+  display: flex;
+  justify-content: center;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 21px;
+  text-transform: uppercase;
+}
+
+.wrapper {
+  margin: 0 auto;
+  letter-spacing: 0.16em;
+  margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .task {
+    margin-right: 5px;
+  }
+}
+@media (min-width: 1200px) {
+  .wrapper {
+    width: 400px;
+    justify-content: start;
+    font-size: 12px;
+    padding: 40px 0 30px 76px;
+    margin: 0;
+  }
+}
