@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import cardList from "./CardList.json";
 import CardListLi from "./cardListLi/CardListLi";
 import style from "./CardListUl.module.css";
 
@@ -12,6 +11,7 @@ const CardListUl = ({
   pointsToModal,
   location,
   dayLabel,
+  setTotalPoints
 }) => {
   return (
     <ul className={style.card__listUL}>
@@ -19,6 +19,7 @@ const CardListUl = ({
         cardList.map((list) => {
           return (
             <CardListLi
+            setTotalPoints={setTotalPoints}
               list={list}
               key={list.id|| list._id}
               value={list._id}

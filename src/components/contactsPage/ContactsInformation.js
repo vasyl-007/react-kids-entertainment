@@ -25,14 +25,6 @@ export const Contacts = [
     id: 1,
   },
   {
-    foto: foto13,
-    name: "Vasyl Manyo",
-    position: "Front-End Developer",
-    description: "WeekTabContent, WeekTabs",
-    contacts: "vasyl.manyo@ukr.net",
-    id: 13,
-  },
-  {
     foto: foto2,
     name: "Sergei Andreiev",
     position: "Front-End Developer",
@@ -120,7 +112,14 @@ export const Contacts = [
     contacts: "galinas.vm@gmail.com",
     id: 12,
   },
-
+  {
+    foto: foto13,
+    name: "Vasyl Manyo",
+    position: "Front-End Developer",
+    description: "WeekTabContent, WeekTabs",
+    contacts: "vasyl.manyo@ukr.net",
+    id: 13,
+  },
   {
     foto: foto14,
     name: "Roman Verzhbovski",

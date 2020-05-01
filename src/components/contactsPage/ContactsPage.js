@@ -3,7 +3,7 @@ import styles from "./ContactsPage.module.css";
 import { Contacts } from "./ContactsInformation";
 import { Footer } from "../Footer/Footer";
 
- const ContactsPage = () => {
+ const ContactsPage = (props) => {
   return (
     <>
     <div className={styles.contacts}>

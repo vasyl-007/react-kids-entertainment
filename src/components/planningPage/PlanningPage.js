@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { CardList } from "../../common/cardList/CardList";
-import data from "../../common/cardList/data.json";
 import { PlanningPoints } from "../PlanningPoints/PlanningPoints";
 import { AddCustomTask } from "../AddCustomTask/AddCustomTask";
 import { Footer } from "../Footer/Footer";
@@ -15,19 +14,18 @@ const PlanningPage = () => {
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const userToken = useSelector((state) => state.user.userToken);
 
-function getTotal() {
-  return tasks.reduce((prev, current) => {
-    const days = current.days.filter((day) => day.isActive === true).length;
-    return prev + current.taskPoints * days;
-  }, 0);
-}
+  function getTotal() {
+    return tasks.reduce((prev, current) => {
+      const days = current.days.filter((day) => day.isActive === true).length;
+      return prev + current.taskPoints * days;
+    }, 0);
+  }
 
-let total = getTotal()
-  
+  let total = getTotal();
+
   const plusPoint = (p) => {
     setAllUserPoints(allUserPoints + p);
   };
-  // console.log('allUserPoints', allUserPoints)
   function handleOpenTaskModal() {
     setModalIsOpen(true);
   }
@@ -67,10 +65,10 @@ let total = getTotal()
       )}
       <div className={styles.topComponentsContainer}>
         <CurrentWeekPlaning />
-        <PlanningPoints score={total}/>
+        <PlanningPoints score={total} />
         <AddCustomTask handleOpenTaskModal={handleOpenTaskModal} />
       </div>
-      <CardList plusPoint={plusPoint} data={tasks}  getTasks={getTasks}/>
+      <CardList plusPoint={plusPoint} data={tasks} getTasks={getTasks} />
       <Footer />
     </div>
   );

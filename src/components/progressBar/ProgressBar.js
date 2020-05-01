@@ -1,14 +1,9 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
 import style from "./ProgressBar.module.css";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 
 const ProgressBar = ({ userPoints, weekPoints }) => {
-  console.log("weekPoints", weekPoints);
-  console.log("userPoints", userPoints);
-  // const { weekPoints } = useSelector((state) => state.user);
-
   let percent = 100;
   if (weekPoints) {
     percent = parseFloat(
@@ -18,7 +13,6 @@ const ProgressBar = ({ userPoints, weekPoints }) => {
   if (userPoints === 0) {
     percent = 0;
   }
-
   return (
     <>
       <div className={style.wrapp}>
@@ -36,7 +30,7 @@ const ProgressBar = ({ userPoints, weekPoints }) => {
           <span className={style.secondPoints}>
             {userPoints}/{weekPoints}
           </span>
-          <Progress percent={percent} />
+          <Progress percent={Math.round(percent)} />
         </div>
       </div>
     </>

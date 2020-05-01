@@ -40,7 +40,7 @@ let days = [
   },
   {
     id: 5,
-    label: "П'ятниця",
+    label: "П’ятниця",
     shortLabel: "Пт",
     name: "friday",
     selected: false,
@@ -55,7 +55,6 @@ let days = [
   { id: 7, label: "Неділя", shortLabel: "Нд", name: "sunday", selected: false },
 ];
 
-const windowWidth = document.documentElement.clientWidth;
 const setMainPath = () => {
   const weekDay = moment().get("day");
   days.map((day) =>
@@ -66,7 +65,7 @@ const setMainPath = () => {
 };
 
 const MainPage = () => {
-  const { userToken, userTasks } = useSelector((state) => state.user);
+  const { userToken } = useSelector((state) => state.user);
   const [tasks, setTasks] = useState([]);
   const [dayLabel, setDayLabel] = useState(moment().format("dddd"));
   const [fullDate, setFullDate] = useState(moment().format("L"));
@@ -77,33 +76,27 @@ const MainPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  console.log();
 
   useEffect(() => {
     history.push(day);
   }, [day, history]);
 
-  // useEffect(() => {
-  //   const dayId = days.find((day) =>
-  //     day.label.toLowerCase() === dayLabel.toLowerCase() ? day.id : null
-  //   );
   useEffect(() => {
     const newDays = days.map((day, indx) => ({
       ...day,
       dateOfWeek: `${moment().weekday(indx).format("L")}`,
     }));
-    console.log("newDays-------", newDays);
     days = newDays;
-    const dayId = days.find((day) =>
-      day.label.toLowerCase() === dayLabel.toLowerCase() ? day.id : null
-    );
+
+    const dayId = days.find((day) => {
+      return day.label.toLowerCase() === dayLabel.toLowerCase() ? day.id : null;
+    });
     selectDay(dayId.id);
   }, []);
 
   const selectDay = async (id) => {
     const currentDayForImage = days.find((day) => day.id === id);
     await services.getCurrentUser(userToken).then((data) => {
-      console.log("------ !! ----", data.data.user.points);
       dispatch({ type: "ADD_POINT", payload: data.data.user.points });
 
       setTotalPoints(data.data.user.points);
@@ -113,7 +106,6 @@ const MainPage = () => {
         return sum ? acc + sum : acc;
       }, 0);
 
-      console.log("!!!!", data.data.user.tasks);
       const result = data.data.user.tasks.map((task) => ({
         title: task.title,
         points: task.taskPoints,
@@ -130,33 +122,16 @@ const MainPage = () => {
         id: task._id,
       }));
 
-      // find user task 'isDone'
-
-      // console.log(
-      //   "data.data.user.tasks",
-      //   data.data.user.tasks.map((task) => {
-      //     console.log("task", task._id);
-      //     return task.days.filter((task) => {
-      //       return task.isDone;
-      //     });
-      //   })
-      // );
-
       const resultforFilter = result.filter(
         (activeDay) => activeDay.days[0].length
       );
 
       setDetect(resultforFilter);
-      console.log("resultforFilter", resultforFilter);
       if (resultforFilter.length === 0) {
         setPlaningPoints(0);
         return;
       } else {
         setPlaningPoints(
-          resultforFilter.reduce((acc, activeDay) => acc + activeDay.points, 0)
-        );
-        console.log(
-          "reduce",
           resultforFilter.reduce((acc, activeDay) => acc + activeDay.points, 0)
         );
         dispatch({
@@ -165,10 +140,8 @@ const MainPage = () => {
         });
       }
 
-      // const dateOffTask = resultforFilter[0].days[0][0].date;
       setPlaningPoints(points);
       setTasks(resultforFilter);
-      console.log("curentDayForImage", currentDayForImage);
     });
     setFullDate(currentDayForImage.dateOfWeek);
 
@@ -180,8 +153,9 @@ const MainPage = () => {
     <div className={s.container}>
       {window.innerWidth < 769 && (
         <>
-          <WeekTabs days={setMainPath()} choosenDay={selectDay} />
+          <WeekTabs  days={setMainPath()} choosenDay={selectDay} />
           <WeekTabContent
+          setTotalPoints={setTotalPoints}
             dayLabel={dayLabel}
             fullDate={fullDate}
             tasks={tasks}
@@ -194,6 +168,7 @@ const MainPage = () => {
       {window.innerWidth >= 770 && window.innerWidth <= 1199 && (
         <>
           <WeekTabContent
+          setTotalPoints={setTotalPoints}
             dayLabel={dayLabel}
             fullDate={fullDate}
             tasks={tasks}
@@ -210,6 +185,7 @@ const MainPage = () => {
         <>
           <WeekTabs days={setMainPath()} choosenDay={selectDay} />
           <WeekTabContent
+          setTotalPoints={setTotalPoints}
             dayLabel={dayLabel}
             fullDate={fullDate}
             tasks={tasks}
